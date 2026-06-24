@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dig Your Time — A first-person 3D survival dungeon-crawler</title>
+<meta name="description" content="Dig Your Time is a first-person 3D survival dungeon-crawler where time is everything. Mine the depths. Survive the clock." />
+<meta property="og:title" content="Dig Your Time" />
+<meta property="og:description" content="A first-person 3D survival dungeon-crawler where time is everything." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg1: '#0B0B0D',
+        bg2: '#191728',
+        purple1: '#6C5ECE',
+        purple2: '#994EB4',
+        fg: '#FFFFFF',
+        mfg: '#CFCFCF',
+        afg: '#735CCA',
+      },
+      fontFamily: {
+        display: ['Poppins','sans-serif'],
+        body: ['Inter','sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  html,body{background:#0B0B0D;color:#fff;font-family:'Inter',sans-serif}
+  h1,h2,h3,h4,h5{font-family:'Poppins',sans-serif}
+  .btn-primary{background:#6C5ECE;color:#fff}
+  .btn-primary:hover{background:#7d70d8}
+  .btn-secondary{background:transparent;color:#fff;border:1px solid #2a2840}
+  .btn-secondary:hover{border-color:#6C5ECE}
+  .card{background:#191728;border:1px solid #221f33;border-radius:12px}
+  .card-top{background:linear-gradient(90deg,#6C5ECE,#994EB4);height:4px;border-radius:12px 12px 0 0}
+  .progress-bar{height:6px;border-radius:3px;background:#2a2840;overflow:hidden;position:relative}
+  .progress-bar > span{position:absolute;inset:0;background:linear-gradient(90deg,#6C5ECE,#994EB4);transform-origin:left;transform:scaleX(0);transition:transform .2s linear}
+  .progress-bar.done > span{transform:scaleX(1)}
+  .progress-bar.active > span{animation:fill 7s linear forwards}
+  @keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .pill{background:#2a2245;color:#fff;border-radius:9999px;padding:4px 12px;font-size:12px;display:inline-block}
+  .frame-card{background:#191728;border:1px solid #221f33;border-radius:14px;position:relative;overflow:hidden}
+  .crystals-bg{background-image:url('assets/Crystals.png');background-repeat:no-repeat;background-position:right center;background-size:contain}
+  .carousel{display:grid}
+  .carousel > .slide{grid-area:1/1;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease;display:grid}
+  .carousel > .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .kicker{color:#735CCA;font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px}
+  .avatar-ph{background:#e5e5e5;color:#9a9a9a}
+</style>
+</head>
+<body class="bg-bg1 text-fg">
+
+<!-- NAV -->
+<header class="max-w-7xl mx-auto px-6 pt-6 flex items-center justify-between">
+  <a href="#"><img src="assets/Logo.svg" alt="Dig Your Time" class="h-12 w-auto" /></a>
+  <nav class="flex items-center gap-5">
+    <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="" /></a>
+    <a href="#" aria-label="Instagram"><img src="assets/Instagram-icon.svg" class="h-6 w-6" alt="" /></a>
+    <a href="https://discord.gg/fcRZZMCmn" target="_blank" rel="noopener" aria-label="Discord"><img src="assets/Discord-icon.svg" class="h-6 w-6" alt="" /></a>
+    <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-full px-5 py-2 text-sm font-medium">Join Waitlist</a>
+  </nav>
+</header>
+
+<!-- HERO CAROUSEL -->
+<section class="max-w-7xl mx-auto px-6 pt-10 pb-20">
+  <!-- progress -->
+  <div class="mb-8">
+    <img src="assets/Decor-Bar.svg" alt="" class="mb-4 h-4" />
+    <div class="grid grid-cols-3 gap-3 max-w-xl">
+      <button data-go="0" class="progress-bar" id="pb-0"><span></span></button>
+      <button data-go="1" class="progress-bar" id="pb-1"><span></span></button>
+      <button data-go="2" class="progress-bar" id="pb-2"><span></span></button>
+    </div>
+  </div>
+
+  <!-- Slides -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+  <div class="relative carousel">
+    <!-- Slide 1 -->
+    <div class="slide active" id="slide-0">
+      <div>
+        <div class="kicker mb-3">Project //</div>
+        <h1 class="font-display font-bold text-5xl md:text-6xl leading-tight mb-5">Dig Your Time</h1>
+        <p class="text-mfg max-w-md mb-8">A first-person 3D survival dungeon-crawler where time defines your fate. Mine the depths. Survive the clock.</p>
+        <div class="flex gap-3 mb-6">
+          <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
+          <a href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWslvsZcnRsLDkCtWrzWTKmGJSQZBDJGGGwcLxRrWMwxZZsrRzxppCkzvhwjsQrTNWLRXCJLq" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
+          <a href="#"><img src="assets/Instagram-icon.svg" class="h-6 w-6" alt="Instagram" /></a>
+          <a href="https://discord.gg/fcRZZMCmn" target="_blank" rel="noopener"><img src="assets/Discord-icon.svg" class="h-6 w-6" alt="Discord" /></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" id="slide-1">
+      <div>
+        <div class="kicker mb-3">Dig Your Time //</div>
+        <h2 class="font-display font-bold text-5xl md:text-6xl leading-tight mb-5">Time = Resource</h2>
+        <p class="text-mfg max-w-md mb-8">Dig deeper to mine time. Spend it to act, trade, and survive. Risk it for greater rewards — or lose it forever.</p>
+        <div class="flex gap-3 mb-6">
+          <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
+          <a href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWslvsZcnRsLDkCtWrzWTKmGJSQZBDJGGGwcLxRrWMwxZZsrRzxppCkzvhwjsQrTNWLRXCJLq" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
+          <a href="#"><img src="assets/Instagram-icon.svg" class="h-6 w-6" alt="Instagram" /></a>
+          <a href="https://discord.gg/fcRZZMCmn" target="_blank" rel="noopener"><img src="assets/Discord-icon.svg" class="h-6 w-6" alt="Discord" /></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" id="slide-2">
+      <div>
+        <div class="kicker mb-3">Dig Your Time //</div>
+        <h2 class="font-display font-bold text-5xl md:text-6xl leading-tight mb-5">Survive the Clock</h2>
+        <p class="text-mfg max-w-md mb-8">Every choice ticks. Trade with shopkeepers, push deeper into the dungeon, and outlast the depths before your time runs out.</p>
+        <div class="flex gap-3 mb-6">
+          <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
+          <a href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWslvsZcnRsLDkCtWrzWTKmGJSQZBDJGGGwcLxRrWMwxZZsrRzxppCkzvhwjsQrTNWLRXCJLq" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
+          <a href="#"><img src="assets/Instagram-icon.svg" class="h-6 w-6" alt="Instagram" /></a>
+          <a href="https://discord.gg/fcRZZMCmn" target="_blank" rel="noopener"><img src="assets/Discord-icon.svg" class="h-6 w-6" alt="Discord" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-end"><img src="assets/Shop_transperant.png" alt="Shop concept art" class="w-full max-w-xl" /></div>
+  </div>
+</section>
+
+<!-- 3 STAT CARDS -->
+<section class="bg-bg2/40 py-16 relative crystals-bg">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="card overflow-hidden">
+      <div class="card-top"></div>
+      <div class="p-7 text-center">
+        <div class="kicker mb-4">//Stage</div>
+        <h3 class="font-display font-bold text-2xl mb-3">Active Development</h3>
+        <p class="text-mfg text-sm">Rebuilding in Unreal Engine after a validated Unity prototype. First vertical slice in progress.</p>
+      </div>
+    </div>
+    <div class="card overflow-hidden">
+      <div class="card-top"></div>
+      <div class="p-7 text-center">
+        <div class="kicker mb-4">//Community</div>
+        <h3 class="font-display font-bold text-2xl mb-3">Discord Launched</h3>
+        <p class="text-mfg text-sm">Brand community & direct feedback loop where players follow exclusive updates and influence key decisions.</p>
+      </div>
+    </div>
+    <div class="card overflow-hidden">
+      <div class="card-top"></div>
+      <div class="p-7 text-center">
+        <div class="kicker mb-4">//Traction</div>
+        <h3 class="font-display font-bold text-2xl mb-3">Strong Early Validation</h3>
+        <p class="text-mfg text-sm">Pitched the concept successfully to mixed audiences, including non-gamers, with strong reception.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKET frame -->
+  <div class="max-w-7xl mx-auto px-6 mt-10 space-y-6">
+    <div class="frame-card p-8">
+      <div class="flex items-start gap-6">
+        <div class="w-1 h-16 bg-white/80"></div>
+        <div class="flex-1 text-right">
+          <div class="flex items-center justify-end gap-4 mb-3">
+            <img src="assets/Decor-Cross.svg" alt="" class="h-5" />
+            <h3 class="font-display font-bold text-3xl">MARKET</h3>
+          </div>
+          <p class="text-mfg text-sm">Survival and dungeon crawler games are in high demand, but their potential convergence remains untapped — and that is exactly what we are building.
+            Valheim (> $200M) and Hades (> $50M) demonstrate that survival and dungeon crawler games consistently achieve strong post-launch commercial success, driven by highly engaged player bases.</p>
+          <div class="text-afg mt-2">///</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-card p-8">
+      <div class="flex items-start gap-6">
+        <div class="flex-1">
+          <div class="flex items-center gap-4 mb-3">
+            <h3 class="font-display font-bold text-3xl">BUSINESS MODEL</h3>
+            <img src="assets/Decor-Cross.svg" alt="" class="h-5" />
+          </div>
+          <p class="text-mfg text-sm">one-time purchase at launch, with optional cosmetic/support dlc post-release. early supporter packs planned ahead of launch to build community and pre-launch revenue validation.</p>
+          <div class="text-afg mt-2">///</div>
+        </div>
+        <div class="w-1 h-16 bg-white/80"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="bg-bg1 py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-center font-display font-bold text-3xl md:text-4xl mb-3">A TEAM DRIVEN BY PASSION</h2>
+    <p class="text-center text-mfg max-w-2xl mx-auto mb-12 text-sm">A dedicated game studio building a strong foundation for a scalable company — driven by quality, unforgettable player experiences, and disciplined execution.</p>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-6">
+      <!-- Card template -->
+      <!-- Shark -->
+      <div class="card overflow-hidden">
+        <div class="card-top"></div>
+        <div class="aspect-square relative overflow-hidden"><a href="https://www.linkedin.com/in/kateryna-perepelytsia-shark/" target="_blank" rel="noopener"><img src="assets/Shark.jpg" alt="Shark" class="absolute inset-0 w-full h-full object-cover" /></a><a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" class="absolute bottom-2 right-2 bg-white/90 rounded p-1"><img src="assets/LinkedIn-icon.svg" class="h-4 w-4" alt="LinkedIn" /></a></div>
+        <div class="p-4 text-center">
+          <h4 class="font-display font-semibold text-lg">Shark</h4>
+          <p class="text-mfg text-xs mb-3">//founder &amp; strategist</p>
+          <div class="flex flex-wrap gap-1.5 justify-center">
+            <span class="pill">leadership</span><span class="pill">strategy</span><span class="pill">technical art</span>
+          </div>
+        </div>
+      </div>
+      <!-- Behroz -->
+      <div class="card overflow-hidden">
+        <div class="card-top"></div>
+        <div class="aspect-square relative overflow-hidden"><a href="https://www.linkedin.com/in/behroz-karim/" target="_blank" rel="noopener"><img src="assets/Behroz.jpg" alt="Behroz" class="absolute inset-0 w-full h-full object-cover" /></a><a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" class="absolute bottom-2 right-2 bg-white/90 rounded p-1"><img src="assets/LinkedIn-icon.svg" class="h-4 w-4" alt="LinkedIn" /></a></div>
+        <div class="p-4 text-center">
+          <h4 class="font-display font-semibold text-lg">Behroz</h4>
+          <p class="text-mfg text-xs mb-3">//head of engineering</p>
+          <div class="flex flex-wrap gap-1.5 justify-center">
+            <span class="pill">unreal engine</span><span class="pill">C++</span><span class="pill">gameplay systems</span>
+          </div>
+        </div>
+      </div>
+      <!-- Aku -->
+      <div class="card overflow-hidden">
+        <div class="card-top"></div>
+        <div class="aspect-square relative overflow-hidden"><a href="https://www.linkedin.com/in/aku-nurmi-266091171/" target="_blank" rel="noopener"><img src="assets/Aku.jpg" alt="Aku" class="absolute inset-0 w-full h-full object-cover" /></a><a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" class="absolute bottom-2 right-2 bg-white/90 rounded p-1"><img src="assets/LinkedIn-icon.svg" class="h-4 w-4" alt="LinkedIn" /></a></div>
+        <div class="p-4 text-center">
+          <h4 class="font-display font-semibold text-lg">Aku</h4>
+          <p class="text-mfg text-xs mb-3">//head of narrative</p>
+          <div class="flex flex-wrap gap-1.5 justify-center">
+            <span class="pill">world-building</span><span class="pill">lore</span><span class="pill">narrative</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6 max-w-2xl mx-auto">
+      <!-- Andrew -->
+      <div class="card overflow-hidden">
+        <div class="card-top"></div>
+        <div class="aspect-square relative overflow-hidden"><a href="https://www.linkedin.com/in/mariia-antonenko-97645224b/" target="_blank" rel="noopener"><img src="assets/Andrew.jpg" alt="Andrew" class="absolute inset-0 w-full h-full object-cover" /></a><a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" class="absolute bottom-2 right-2 bg-white/90 rounded p-1"><img src="assets/LinkedIn-icon.svg" class="h-4 w-4" alt="LinkedIn" /></a></div>
+        <div class="p-4 text-center">
+          <h4 class="font-display font-semibold text-lg">Andrew</h4>
+          <p class="text-mfg text-xs mb-3">//head of visuals</p>
+          <div class="flex flex-wrap gap-1.5 justify-center">
+            <span class="pill">UI/UX</span><span class="pill">VFX</span><span class="pill">visual feedback</span>
+          </div>
+        </div>
+      </div>
+      <!-- Vishaka -->
+      <div class="card overflow-hidden">
+        <div class="card-top"></div>
+        <div class="aspect-square relative overflow-hidden"><a href="https://www.linkedin.com/in/vishaka-salpiumi-3b6578349/" target="_blank" rel="noopener"><img src="assets/Vishaka.webp" alt="Vishaka" class="absolute inset-0 w-full h-full object-cover" /></a><a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener" class="absolute bottom-2 right-2 bg-white/90 rounded p-1"><img src="assets/LinkedIn-icon.svg" class="h-4 w-4" alt="LinkedIn" /></a></div>
+        <div class="p-4 text-center">
+          <h4 class="font-display font-semibold text-lg">Vishaka</h4>
+          <p class="text-mfg text-xs mb-3">//head of audio</p>
+          <div class="flex flex-wrap gap-1.5 justify-center">
+            <span class="pill">sound design</span><span class="pill">content</span><span class="pill">community</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE'RE LOOKING FOR -->
+<section class="bg-bg2 py-20" id="waitlist">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="font-display font-bold text-3xl md:text-4xl text-purple1 mb-3">WHAT WE'RE LOOKING FOR</h2>
+    <p class="text-mfg text-sm mb-12">{ Great games need great foundations. Help us lay ours. }</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left mb-12">
+      <div>
+        <h4 class="font-display font-semibold text-sm tracking-wide mb-2">GO-TO-MARKET &amp; COMMUNITY</h4>
+        <p class="text-mfg text-sm">Structuring our wishlist and community strategy ahead of the playable slice.</p>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm tracking-wide mb-2">MONETIZATION VALIDATION</h4>
+        <p class="text-mfg text-sm">Feedback on pricing, supporter packs, and DLC timing.</p>
+      </div>
+      <div>
+        <h4 class="font-display font-semibold text-sm tracking-wide mb-2">FUNDING &amp; GRANTS</h4>
+        <p class="text-mfg text-sm">Guidance on early fundraising or grant options for a pre-incorporation studio.</p>
+      </div>
+    </div>
+
+    <div class="flex justify-center gap-3" id="contact">
+      <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium inline-flex items-center gap-2"><img src="assets/Pickaxe-icon.svg" alt="" class="h-4 w-4" /> Join Waitlist</a>
+      <a href="https://mail.google.com/mail/u/1/#inbox?compose=DmwnWslvsZcnRsLDkCtWrzWTKmGJSQZBDJGGGwcLxRrWMwxZZsrRzxppCkzvhwjsQrTNWLRXCJLq" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-bg1 py-12 border-t border-bg2">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+    <div>
+      <h3 class="font-display font-semibold text-xl mb-4">Follow Our Journey</h3>
+      <div class="flex gap-4">
+        <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-8 w-8" alt="LinkedIn" /></a>
+        <a href="#"><img src="assets/Instagram-icon.svg" class="h-8 w-8" alt="Instagram" /></a>
+        <a href="https://discord.gg/fcRZZMCmn" target="_blank" rel="noopener"><img src="assets/Discord-icon.svg" class="h-8 w-8" alt="Discord" /></a>
+      </div>
+    </div>
+    <div class="font-display font-bold text-2xl leading-none text-right">DIG<br/>YOUR<br/>TIME</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const bars = [document.getElementById('pb-0'),document.getElementById('pb-1'),document.getElementById('pb-2')];
+  let idx = 0, timer = null;
+
+  function show(i){
+    idx = (i + slides.length) % slides.length;
+    slides.forEach((s,n)=>s.classList.toggle('active', n===idx));
+    bars.forEach((b,n)=>{
+      b.classList.remove('active','done');
+      // restart animation
+      const span = b.querySelector('span');
+      span.style.animation = 'none'; void span.offsetWidth; span.style.animation = '';
+      if(n < idx) b.classList.add('done');
+      else if(n === idx) b.classList.add('active');
+    });
+    restart();
+  }
+  function next(){ show(idx+1); }
+  function restart(){ clearTimeout(timer); timer = setTimeout(next, 7000); }
+
+  bars.forEach((b,n)=> b.addEventListener('click', ()=>show(n)));
+  show(0);
+})();
+</script>
+</body>
+</html>
