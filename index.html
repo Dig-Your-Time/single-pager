@@ -348,18 +348,18 @@ tailwind.config = {
   bars.forEach((b,n)=> b.addEventListener('click', ()=>show(n)));
   show(0);
 
-  // Contact buttons: open native mail app on mobile, Gmail web compose on desktop.
+  // Contact buttons: native mail app on mobile (default mailto:), Gmail web compose on desktop.
   const EMAIL = 'nekkstudios.games@gmail.com';
   const SUBJECT = 'Dig Your Time Inquiry';
   const isMobile = /Android|iPhone|iPad|iPod|Mobile|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  document.querySelectorAll('.contact-link').forEach(function(link){
-    link.addEventListener('click', function(e){
-      if(isMobile) return; // let the default mailto: open the native app
-      e.preventDefault();
-      const url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL) + '&su=' + encodeURIComponent(SUBJECT);
-      window.open(url, '_blank', 'noopener');
+  if(!isMobile){
+    const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL) + '&su=' + encodeURIComponent(SUBJECT);
+    document.querySelectorAll('.contact-link').forEach(function(link){
+      link.setAttribute('href', gmailUrl);
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener');
     });
-  });
+  }
 })();
 </script>
 </body>
