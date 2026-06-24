@@ -93,7 +93,7 @@ tailwind.config = {
         <p class="text-mfg max-w-md mb-8">A first-person 3D survival dungeon-crawler where time defines your fate. Mine the depths. Survive the clock.</p>
         <div class="flex gap-3 mb-6">
           <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nekkstudios.games@gmail.com&su=Dig%20Your%20Time%20Inquiry" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+          <a href="mailto:nekkstudios.games@gmail.com?subject=Dig%20Your%20Time%20Inquiry" class="contact-link btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
@@ -111,7 +111,7 @@ tailwind.config = {
         <p class="text-mfg max-w-md mb-8">Dig deeper to mine time. Spend it to act, trade, and survive. Risk it for greater rewards — or lose it forever.</p>
         <div class="flex gap-3 mb-6">
           <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nekkstudios.games@gmail.com&su=Dig%20Your%20Time%20Inquiry" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+          <a href="mailto:nekkstudios.games@gmail.com?subject=Dig%20Your%20Time%20Inquiry" class="contact-link btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
@@ -129,7 +129,7 @@ tailwind.config = {
         <p class="text-mfg max-w-md mb-8">Every choice ticks. Trade with shopkeepers, push deeper into the dungeon, and outlast the depths before your time runs out.</p>
         <div class="flex gap-3 mb-6">
           <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium">Join Waitlist</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nekkstudios.games@gmail.com&su=Dig%20Your%20Time%20Inquiry" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+          <a href="mailto:nekkstudios.games@gmail.com?subject=Dig%20Your%20Time%20Inquiry" class="contact-link btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/nekk-studios-dig-your-time/" target="_blank" rel="noopener"><img src="assets/LinkedIn-icon.svg" class="h-6 w-6" alt="LinkedIn" /></a>
@@ -303,7 +303,7 @@ tailwind.config = {
 
     <div class="flex justify-center gap-3" id="contact">
       <a href="https://nekkstudios.kit.com/7360816ba4" target="_blank" rel="noopener" class="btn-primary rounded-lg px-6 py-3 font-medium inline-flex items-center gap-2"><img src="assets/Pickaxe-icon.svg" alt="" class="h-4 w-4" /> Join Waitlist</a>
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nekkstudios.games@gmail.com&su=Dig%20Your%20Time%20Inquiry" target="_blank" rel="noopener" class="btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
+      <a href="mailto:nekkstudios.games@gmail.com?subject=Dig%20Your%20Time%20Inquiry" class="contact-link btn-secondary rounded-lg px-6 py-3 font-medium">Contact Us</a>
     </div>
   </div>
 </section>
@@ -347,6 +347,19 @@ tailwind.config = {
 
   bars.forEach((b,n)=> b.addEventListener('click', ()=>show(n)));
   show(0);
+
+  // Contact buttons: open native mail app on mobile, Gmail web compose on desktop.
+  const EMAIL = 'nekkstudios.games@gmail.com';
+  const SUBJECT = 'Dig Your Time Inquiry';
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  document.querySelectorAll('.contact-link').forEach(function(link){
+    link.addEventListener('click', function(e){
+      if(isMobile) return; // let the default mailto: open the native app
+      e.preventDefault();
+      const url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL) + '&su=' + encodeURIComponent(SUBJECT);
+      window.open(url, '_blank', 'noopener');
+    });
+  });
 })();
 </script>
 </body>
